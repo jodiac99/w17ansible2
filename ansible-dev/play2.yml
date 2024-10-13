@@ -1,0 +1,32 @@
+---
+- hosts: ws
+  become: true
+  ignore_errors: yes
+  gather_facts: yes
+  vars:
+    package_name: httpd
+  tasks:
+    - name: Install package
+      yum: # will work with using many packages yum install unzip wget curl
+        name: "{{package_name}}"
+        state: present
+
+    # - name: Create groups
+    #   group:
+    #     state: present
+    #     name: "{{ item }}"
+
+    #   loop:
+    #       - cloud
+    #       - security
+    #       - devops
+    #       - linux
+    - name: Create group
+      group:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - cloud
+        - security
+        - devops
+        - linux
